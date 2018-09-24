@@ -69,18 +69,15 @@ def main():
 
     occ_dic = dict()
     prob_dic = dict((a, b) for a, b in zip(values, probs))
-    print(probs)
     for val in values:
         if val in occ_dic:
             occ_dic.__setitem__(val, occ_dic.__getitem__(val) + 1)
         else:
             occ_dic.__setitem__(val, 1)
-    print(prob_dic)
+    print("\n\nconsidering the combine cases, the projections are \n")
     for res in occ_dic:
-        print("considering the combine cases, the probability that %d is"
-              " the price it's --- > %g percent" % (res, round((occ_dic[res] * prob_dic[res]) * 100)))
-
-
+        calc = ((occ_dic[res] * prob_dic[res]) * 100)
+        print("price   %g  --- > p(event)  ==  %g %%" % (res, round((occ_dic[res] * prob_dic[res]) * 100)))
 
 main()
 
