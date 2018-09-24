@@ -14,4 +14,4 @@ You can set:
 The tool returns:
 - all possible values with associated probability of happening, considering the combine cases.
 
-![Figure 1-1](https://raw.github.com/clone95/Projection-binary-tree/master/s1.jpg "s1") 
+![Figure 1-1](https://raw.github.com/clone95/Projection-binary-tree/master/s1.PNG "s1") 

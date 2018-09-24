@@ -1,58 +1,46 @@
 from anytree import Node, RenderTree
 
 
-class Result:
+class Result:                                   # class to host (event price - probability of happening)
     def __init__(self, value, prob):
         self.value = value
         self.prob = prob
 
 
-class f_Result:
-    def __init__(self, value, prob, frequence):
-        self.value = value
-        self.prob = prob
-        self.frequence = frequence
-
-
-def variation(to_incr, n):     # increment
+def variation(to_incr, n):     # variation EACH period
     return to_incr*n
 
 
-def generate_level(node, n, inc, dec, prob_inc, prob_dec):
-        nod1 = Node(root.name, node, prob=1)
+def generate_tree(node, n, inc, dec, prob_inc, prob_dec):
+        nod1 = Node(root.name, node, prob=1)        # generate leaves
         nod2 = Node(root.name, node, prob=1)
-        nod1.name = nod1.parent.name + variation(nod1.parent.name, inc)
+        nod1.name = nod1.parent.name + variation(nod1.parent.name, inc)         # variation on the price
         nod2.name = nod2.parent.name - variation(nod1.parent.name, dec)
-        nod1.__setattr__(("prob"), (nod1.parent.__getattribute__("prob") * prob_inc))
+        nod1.__setattr__(("prob"), (nod1.parent.__getattribute__("prob") * prob_inc))       # probability of reaching that specific leaf
         nod2.__setattr__(("prob"), (nod2.parent.__getattribute__("prob") * prob_dec))
-
-        #nod1.prob = root.children * prob_inc
-        #nod2.prob = nod2.parent.prob * prob_dec
         if n != 0:
-            generate_level(nod1, n-1, inc, dec, prob_inc, prob_dec)
-            generate_level(nod2, n-1, inc, dec, prob_inc, prob_dec)
+            generate_tree(nod1, n - 1, inc, dec, prob_inc, prob_dec)            # recursive branches generation
+            generate_tree(nod2, n - 1, inc, dec, prob_inc, prob_dec)
 
 
-root = Node(100, prob=1)
+root = Node(100, prob=1)            # test root
 
-#print(results)
-
-#print(RenderTree(root))
 
 def main():
 
-    print("\n\nBinary tree - Inserisci i parametri per la ricerca\n\n")
+    print("\n\nBinary tree - Insert parameters for the projection: \n\n")
 
-   # valore_iniziale = input("Inserisci il valore iniziale:\n\n")
-    #incremento = input("\nInserisci percentuale di INcremento, \nper ogni periodo  [formato decimale:  se 10% --> inserisci 0.1]\n\n")
-    #decremento = input("\nInserisci percentuale di DEcremento, \nper ogni periodo  [formato decimale:  se 10% --> inserisci 0.1]\n\n")
-    #dec_prob = input("\nInserisci probabilità di DEcremento, \nper ogni periodo  [formato decimale:  se 10% --> inserisci 0.1]\n\n")
-    #incr_prob = input("\nInserisci probabilità di DEcremento, \nper ogni periodo  [formato decimale:  se 10% --> inserisci 0.1]\n\n")
-    #periodi = input("\nInserisci quanti periodi vuoi esaminare: \nattenzione alla crescita esponenziale dei calcoli [2^n, n = numero di periodi]\n\n")
+    valore_iniziale = input("Inserisci il valore iniziale:\n\n")
+    incremento = input("\nInsert %% of increase, \nper period [formato decimale:  se 10% --> inserisci 0.1]\n\n")
+    decremento = input("\nInserisci percentuale di DEcremento, \nper ogni periodo  [formato decimale:  se 10% --> inserisci 0.1]\n\n")
+    dec_prob = input("\nInserisci probabilità di DEcremento, \nper ogni periodo  [formato decimale:  se 10% --> inserisci 0.1]\n\n")
+    incr_prob = input("\nInserisci probabilità di DEcremento, \nper ogni periodo  [formato decimale:  se 10% --> inserisci 0.1]\n\n")
+    periodi = input("\nInserisci quanti periodi vuoi esaminare: \nattenzione alla crescita esponenziale dei calcoli [2^n, n = numero di periodi]\n\n")
 
-    root = Node(int(100), prob = 1)
-    #generate_level(root, int(periodi), float(incremento), float(decremento), float(incr_prob), float(dec_prob))
-    generate_level(root, 3, 0.1, 0.1, 0.4, 0.6)
+    root = Node(valore_iniziale, prob = 1)
+
+    generate_tree(root, int(periodi), float(incremento), float(decremento), float(incr_prob), float(dec_prob)) # generate the tree
+
     results = []
     values = []
     probs = []
@@ -74,7 +62,7 @@ def main():
             occ_dic.__setitem__(val, occ_dic.__getitem__(val) + 1)
         else:
             occ_dic.__setitem__(val, 1)
-    print("\n\nconsidering the combine cases, the projections are \n")
+    print("\nconsidering the combine cases, the projections are \n")
     for res in occ_dic:
         calc = ((occ_dic[res] * prob_dic[res]) * 100)
         print("price   %g  --- > p(event)  ==  %g %%" % (res, round((occ_dic[res] * prob_dic[res]) * 100)))
