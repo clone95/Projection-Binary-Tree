@@ -57,7 +57,6 @@ def main():
         probs.append(round(el.prob, 3))
 
     occ_dic = dict()
-
     prob_dic = dict((a, b) for a, b in zip(values, probs))            # one way to fill dictionary (more elegant)
 
     for val in values:                                                # another one, with more logic control
@@ -68,7 +67,6 @@ def main():
 
     print("\nconsidering the combine cases, the projections are \n")
     for res in occ_dic:                                                     # prints out the table with results
-        calc = ((occ_dic[res] * prob_dic[res]) * 100)
         print("price   %g  --- > p(event)  ==  %g %%" % (res, round((occ_dic[res] * prob_dic[res]) * 100)))
 
 
