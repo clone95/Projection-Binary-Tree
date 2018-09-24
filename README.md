@@ -11,7 +11,9 @@ You can set:
 - the probability to increase x period
 - the probability to decrease x period
 
-The tool returns:
+## The tool returns:
 - all possible values with associated probability of happening, considering the combine cases.
+
+#### Lauch parameters of the screen: 100, 0.1, 0.1, 0.4, 0.6, 3 
 
 ![Figure 1-1](https://raw.github.com/clone95/Projection-binary-tree/master/s1.PNG "s1") 
