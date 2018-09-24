@@ -1,7 +1,7 @@
 from anytree import Node, RenderTree
 
 
-class Result:                                   # class to host (event price - probability of happening)
+class Result:                                   # class for hosting value and probability of happening
     def __init__(self, value, prob):
         self.value = value
         self.prob = prob
