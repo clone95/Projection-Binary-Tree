@@ -1,4 +1,19 @@
 from anytree import Node, RenderTree
+from collections import Counter
+
+class Result:
+    def __init__(self, value, prob):
+        self.value = value
+        self.prob = prob
+
+
+class f_Result:
+    def __init__(self, value, prob, frequence):
+        self.value = value
+        self.prob = prob
+        self.frequence = frequence
+
+
 
 
 def variation(to_incr, n):     # increment
@@ -25,9 +40,59 @@ def generate_level(node, n, inc, dec, prob_inc, prob_dec):
 
 
 root = Node(100, prob=1)
-generate_level(root, 4, 0.1, 0.1, (6/10), (4/10))
-print(type(root.children[1]))
-print(RenderTree(root))
+generate_level(root, 3, 0.1, 0.1, (6/10), (4/10))
+results = []
+f_results = []
+controlled = []
+values = []
+data = []
+probs = []
+for child in root.descendants:
+    if child.is_leaf:
+        res = Result(round(child.name), round(child.prob, 2))
+        results.append(res)
+
+
+
+for el in results:
+    values.append(round(el.value))
+for el in results:
+    probs.append(round(el.prob,3))
+
+
+v_p_dict = {}
+ciao = ["a","b"]
+# print(RenderTree(root))          # TREE
+occ_dic = dict()
+prob_dic = dict()
+
+
+prob_dic = dict((a, b) for a, b in zip(values, probs))
+
+for val in values:
+    if val in occ_dic:
+        occ_dic.__setitem__(val, occ_dic.__getitem__(val)+1)
+    else:
+        occ_dic.__setitem__(val, 1)
+
+print(prob_dic)
+print(occ_dic)
+
+# res = f_Result (el, prob, occurencies)
+
+print(results[1].value)
+print("--------")
+
+print(values)
+print(probs)
+
+for res in occ_dic:
+    print("considering the combine cases, the probability that %d is the price it's --- > %g percent" % (res, round((occ_dic[res]*prob_dic[res])*100)))
+
+
+#print(results)
+
+#print(RenderTree(root))
 
 def main():
 
@@ -40,7 +105,7 @@ def main():
     incr_prob = input("\nInserisci probabilità di DEcremento, \nper ogni periodo  [formato decimale:  se 10% --> inserisci 0.1]\n\n")
     periodi = input("\nInserisci quanti periodi vuoi esaminare: \nattenzione alla crescita esponenziale dei calcoli [2^n, n = numero di periodi]\n\n")
     root = Node(int(valore_iniziale))
-    generate_level(root, int(periodi), float(incremento), float(decremento))
+    generate_level(root, int(periodi), float(incremento), float(decremento), float(incr_prob), float(dec_prob))
 
 
 
