@@ -1,7 +1,7 @@
 # Projection-Binary-Tree
 A binary tree based application to simulate stock prices variations
 
-Economist friend of mine asked me for a tree to show the growth or the decrease of a certain stock.
+An economist friend of mine asked me for a tree to show the growth or the decrease of a certain stock.
 You can set:
 
 - stock initial value
